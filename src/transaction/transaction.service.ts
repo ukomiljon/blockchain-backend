@@ -17,7 +17,7 @@ export class TransactionService {
     async track(address: string): Promise<TransactionEntity[]> {
 
         try {
-            const { data}  =await axios.get(`${process.env.ETHERSCAN_API_URL}`, {
+            const { data } = await axios.get(`${process.env.ETHERSCAN_API_URL}`, {
                 params: {
                     module: 'account',
                     action: 'txlist',
@@ -25,9 +25,9 @@ export class TransactionService {
                     apiKey: process.env.ETHERSCAN_API_KEY,
                 },
             });
-    
-            console.log("data=",data); 
-    
+
+            console.log("data=", data);
+
             const transactions = data.result.slice(0, 5).map((tx) => ({
                 address,
                 hash: tx.hash,
@@ -36,14 +36,14 @@ export class TransactionService {
                 to: tx.to,
                 value: tx.value,
             }));
-    
-            console.log("transactions=",transactions);
-            
+
+            console.log("transactions=", transactions);
+
             await this.transactionRepository.save(transactions);
             return transactions;
         } catch (error) {
-            console.log("error=",error); 
+            console.log("error=", error);
         }
-      
+
     }
 }
