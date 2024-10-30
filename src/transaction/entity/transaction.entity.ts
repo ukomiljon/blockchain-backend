@@ -1,6 +1,6 @@
 import { Entity, ObjectIdColumn, Column, ObjectId } from 'typeorm';
 
-@Entity()
+@Entity('transaction')
 export class TransactionEntity {
   @ObjectIdColumn()
   _id: ObjectId;
@@ -12,7 +12,7 @@ export class TransactionEntity {
   hash: string;
 
   @Column()
-  timestamp: string;
+  timestamp: Date;
 
   @Column()
   from: string;

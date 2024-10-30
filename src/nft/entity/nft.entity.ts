@@ -1,6 +1,6 @@
 import { Entity, ObjectIdColumn, Column, ObjectId } from 'typeorm';
 
-@Entity()
+@Entity(('nft'))
 export class NFTEntity {
   @ObjectIdColumn()
   _id: ObjectId;

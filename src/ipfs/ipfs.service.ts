@@ -1,20 +1,57 @@
 // src/ipfs/ipfs.service.ts
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import axios from 'axios';
 import * as FormData from 'form-data';
 import { IPFSEntity } from './entity/ipfs.entity';
 
 @Injectable()
 export class IPFSService {
- 
+
   private readonly authHeader = 'Basic ' + Buffer.from(`${process.env.INFURA_PROJECT_ID}:${process.env.INFURA_SECRET}`).toString('base64');
 
   constructor(
     @InjectRepository(IPFSEntity)
     private ipfsRepository: Repository<IPFSEntity>,
-  ) {}
+  ) { }
+
+  async storeData(data: string): Promise<IPFSEntity> {
+    try {
+      const response = await axios.post(`${process.env.IPFS_INFURA_API_URL}/add`, data, {
+        headers: {         
+          'Content-Type': 'application/json',
+          Authorization: this.authHeader,
+        },
+      });
+
+      console.log("response=",response);      
+
+      const ipfsData = this.ipfsRepository.create({
+        hash: response.data.Hash,
+        createdAt: new Date(),
+      });
+
+      console.log("ipfsData=",ipfsData);
+
+      return await this.ipfsRepository.save(ipfsData);
+
+      // return response.data.Hash;
+    } catch (error) {
+      console.error('Error storing data on IPFS:', error);
+      throw new InternalServerErrorException('Could not store data on IPFS');
+    }
+  }
+
+  async retrieveData(hash: string): Promise<IPFSEntity> {
+    try {
+      const response = await axios.get(`${process.env.IPFS_INFURA_API_URL}/cat/${hash}`);
+      return response.data; // Data retrieved from IPFS
+    } catch (error) {
+      console.error('Error retrieving data from IPFS:', error);
+      throw new InternalServerErrorException('Could not retrieve data from IPFS');
+    }
+  }
 
   async add(data: string): Promise<any> {
     try {
@@ -30,9 +67,10 @@ export class IPFSService {
           Authorization: this.authHeader,
         },
       });
+      console.log("response=", response);
 
-      return this.ipfsRepository.save(response.data); 
-       
+      return this.ipfsRepository.save(response.data);
+
     } catch (error) {
       console.error('Error adding data to IPFS:', error);
       throw new Error('Failed to upload to IPFS');

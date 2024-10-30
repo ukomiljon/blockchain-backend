@@ -10,8 +10,7 @@ import { HttpService } from '@nestjs/axios';
 export class NFTService {
   private web3 = new Web3(process.env.WEB3_URL);
 
-  constructor(
-    private httpService: HttpService,
+  constructor(    
     @InjectRepository(NFTEntity)
     private nftRepository: Repository<NFTEntity>,
   ) { }

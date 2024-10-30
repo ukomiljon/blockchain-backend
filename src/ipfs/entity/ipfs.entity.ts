@@ -1,6 +1,6 @@
 import { Entity, ObjectIdColumn, Column, ObjectId } from 'typeorm';
 
-@Entity()
+@Entity('ipfs')
 export class IPFSEntity {
   @ObjectIdColumn()
   _id: ObjectId;

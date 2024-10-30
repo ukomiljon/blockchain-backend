@@ -1,12 +1,21 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
+import { GetTransactionsDto } from './dto/get-transactions.dto';
 
-@Controller('transaction')
+@Controller('crypto-transactions')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
-  @Get('track')
-  async track(@Query('address') address: string) {
-    return this.transactionService.track(address);
+  @Post(':address')
+  async fetchAndStoreTransactions(@Param('address') address: string) {
+    if (!address) throw new BadRequestException('Address is required');
+    return this.transactionService.fetchAndStoreTransactions(address);
+  }
+
+  @Get()
+  async getTransactions(@Body() query: GetTransactionsDto) {
+    return this.transactionService.getTransactions(query);
   }
 }
+ 
+
