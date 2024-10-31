@@ -8,12 +8,12 @@ export class IPFSController {
     private readonly ipfsService: IPFSService) { }
 
   @Post('store')
-  async storeData(@Body('data') data: string): Promise<IPFSEntity> {
+  async store(@Body('data') data: string): Promise<IPFSEntity> {
     return await this.ipfsService.save(data);;
   }
 
   @Get(':hash')
-  async retrieveData(@Param('hash') hash: string): Promise<IPFSEntity> {
+  async get(@Param('hash') hash: string): Promise<IPFSEntity> {
     return this.ipfsService.get(hash);
   }
 }
