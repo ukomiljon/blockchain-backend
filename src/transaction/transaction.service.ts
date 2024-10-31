@@ -9,7 +9,7 @@ import { GetTransactionsDto } from './dto/get-transactions.dto';
 @Injectable()
 export class TransactionService {
 
-    constructor(        
+    constructor(
         @InjectRepository(TransactionEntity)
         private transactionRepository: Repository<TransactionEntity>,
     ) { }
@@ -37,30 +37,27 @@ export class TransactionService {
                 timestamp: new Date(parseInt(tx.timeStamp) * 1000),
             }));
 
-            console.log("transactions=",transactions);
-            
-            await this.transactionRepository.save(transactions);    
-            console.log("Transactions successfully saved.");
+            await this.transactionRepository.save(transactions);
 
             return transactions;
         } catch (error) {
             throw new InternalServerErrorException('Error fetching transactions');
-        } 
+        }
 
     }
 
     async get(query: GetTransactionsDto): Promise<TransactionEntity[]> {
         const { address, startDate, endDate } = query;
-    
-        const filter: any = { address };
-    
+
+        const filter: any = { address }; 
+        
         // Apply date range filtering if `startDate` or `endDate` is provided
         if (startDate || endDate) {
             filter.timestamp = {};
-            if (startDate) filter.timestamp['$gte'] = new Date(startDate);
-            if (endDate) filter.timestamp['$lte'] = new Date(endDate);
+            if (startDate)  filter.timestamp['$gte'] = new Date(startDate);
+            if (endDate) filter.timestamp['$lte'] = new Date(endDate);  
         }
-    
+
         return await this.transactionRepository.find(filter);
     }
 }
