@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post} from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { GetTransactionsDto } from './dto/get-transactions.dto';
 

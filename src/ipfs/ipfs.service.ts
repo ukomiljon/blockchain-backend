@@ -1,15 +1,11 @@
-// src/ipfs/ipfs.service.ts
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
-import * as FormData from 'form-data';
 import { IPFSEntity } from './entity/ipfs.entity';
 
 @Injectable()
-export class IPFSService {
-
-  private readonly authHeader = 'Basic ' + Buffer.from(`${process.env.INFURA_PROJECT_ID}:${process.env.INFURA_SECRET}`).toString('base64');
+export class IPFSService {  
 
   constructor(
     @InjectRepository(IPFSEntity)
