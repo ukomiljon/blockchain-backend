@@ -37,6 +37,8 @@ Here are some challenge ideas that avoid complexity, can be solved using web3.js
    docker compose up --build    
    yarn start:dev
 
+  Open postman from root folder and can test it.
+
    # Etherscan API Configuration
     ETHERSCAN_API_URL='https://api.etherscan.io/api'
     ETHERSCAN_API_KEY=''
