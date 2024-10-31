@@ -14,7 +14,7 @@ export class TransactionService {
         private transactionRepository: Repository<TransactionEntity>,
     ) { }
 
-    async fetchAndStoreTransactions(address: string): Promise<TransactionEntity[]> {
+    async save(address: string): Promise<TransactionEntity[]> {
         try {
             const response = await axios.get(process.env.ETHERSCAN_API_URL, {
                 params: {
@@ -41,7 +41,7 @@ export class TransactionService {
             
             await this.transactionRepository.save(transactions);    
             console.log("Transactions successfully saved.");
-               
+
             return transactions;
         } catch (error) {
             throw new InternalServerErrorException('Error fetching transactions');
@@ -49,7 +49,7 @@ export class TransactionService {
 
     }
 
-    async getTransactions(query: GetTransactionsDto): Promise<TransactionEntity[]> {
+    async get(query: GetTransactionsDto): Promise<TransactionEntity[]> {
         const { address, startDate, endDate } = query;
     
         const filter: any = { address };

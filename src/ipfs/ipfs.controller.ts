@@ -9,11 +9,11 @@ export class IPFSController {
 
   @Post('store')
   async storeData(@Body('data') data: string): Promise<IPFSEntity> {
-    return await this.ipfsService.storeData(data);;
+    return await this.ipfsService.save(data);;
   }
 
-  @Get('retrieve/:hash')
+  @Get(':hash')
   async retrieveData(@Param('hash') hash: string): Promise<IPFSEntity> {
-    return this.ipfsService.retrieveData(hash);
+    return this.ipfsService.get(hash);
   }
 }

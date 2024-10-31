@@ -20,10 +20,8 @@ export class NFTService {
       const contract = this.createContractInstance(contractAddress);
       const tokenURI = await this.fetchTokenURI(contract, tokenId);
       const nftData = await this.fetchNFTData(tokenURI);
-      const metadata = this.buildMetadata(contractAddress, tokenId, nftData);
-
-      console.log("metadata=", metadata);
-
+      const metadata = this.buildMetadata(contractAddress, tokenId, nftData); 
+      
       return await this.nftRepository.save(metadata);
     } catch (error) {
       throw new InternalServerErrorException(error);
