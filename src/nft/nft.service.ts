@@ -7,7 +7,7 @@ import axios from 'axios';
  
 @Injectable()
 export class NFTService {
-  private web3 = new Web3('https://mainnet.infura.io/v3/f70e36b8e7854679970b8ff46ea6d18d');
+  private web3 = new Web3(process.env.WEB3_URL);
 
   constructor(    
     @InjectRepository(NFTEntity)
