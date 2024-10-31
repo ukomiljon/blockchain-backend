@@ -1,11 +1,10 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ObjectId, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import Web3 from 'web3';
 import { NFTEntity } from './entity/nft.entity';
 import axios from 'axios';
-import { HttpService } from '@nestjs/axios';
-
+ 
 @Injectable()
 export class NFTService {
   private web3 = new Web3(process.env.WEB3_URL);
@@ -21,7 +20,7 @@ export class NFTService {
       const tokenURI = await this.fetchTokenURI(contract, tokenId);
       const nftData = await this.fetchNFTData(tokenURI);
       const metadata = this.buildMetadata(contractAddress, tokenId, nftData); 
-      
+
       return await this.nftRepository.save(metadata);
     } catch (error) {
       throw new InternalServerErrorException(error);
