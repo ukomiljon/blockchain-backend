@@ -29,4 +29,41 @@ Here are some challenge ideas that avoid complexity, can be solved using web3.js
 - **Testnet:** For security and cost-effectiveness, use a blockchain testnet (like Rinkeby or Goerli for Ethereum).
 - **Evaluation Criteria:** Define clear evaluation criteria for the challenge, such as code readability, efficiency, error handling, and adherence to best practices.
 
-Let me know if you have any other specific requirements or scenarios you want to explore!
+## How to Run
+
+1. Start the application using Docker Compose:
+
+   ```bash
+   docker compose up --build    
+   yarn start:dev
+
+   # Etherscan API Configuration
+ETHERSCAN_API_URL='https://api.etherscan.io/api'
+ETHERSCAN_API_KEY=''
+
+# Infura API Configuration
+INFURA_SECRET='T'
+INFURA_PROJECT_ID=''
+
+# Pinata API Configuration
+IPFS_PINATA_API_URL='https://api.pinata.cloud/pinning/pinJSONToIPFS'
+PINATA_API_KEY=''
+PINATA_SECRET_API_KEY=''
+
+# Web3 Configuration
+WEB3_URL='https://mainnet.infura.io/v3/{INFURA_PROJECT_ID}'
+
+# MongoDB Configuration
+MONGODB_URL='mongodb://host.docker.internal:27017/blockchain-app' # if API runs out of Docker
+# MONGODB_URL='mongodb://admin:admin@mongo-db:27017/yacht' # if API runs inside of Docker
+MONGODB_HOST='host.docker.internal'
+# MONGODB_HOST='mongo-db'
+MONGODB_PORT=27017
+MONGODB_DB='blockchain-app'
+MONGODB_USERNAME='admin'
+MONGODB_PASSWORD='admin'
+
+# Application Port
+PORT=3000
+
+
