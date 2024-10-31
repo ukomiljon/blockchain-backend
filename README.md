@@ -60,7 +60,7 @@ Do not forgot to add .env file before start:
 
     # MongoDB Configuration
     MONGODB_URL='mongodb://host.docker.internal:27017/blockchain-app' # if API runs out of Docker
-    # MONGODB_URL='mongodb://admin:admin@mongo-db:27017/yacht' # if API runs inside of Docker
+    # MONGODB_URL='mongodb://admin:admin@mongo-db:27017/blockchain-app' # if API runs inside of Docker
     MONGODB_HOST='host.docker.internal'
     # MONGODB_HOST='mongo-db'
     MONGODB_PORT=27017
